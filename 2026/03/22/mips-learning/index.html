@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2026-03-22 23:26:16
+          2026-03-22 23:28:56
         </span>
         
               <span class="post-tags">
@@ -188,19 +188,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>最近在学习MIPS PWN，以及MIPS架构下的漏洞挖掘，复现了DIR-815.</p>
 </blockquote>
 <ol>
-<li><p><strong>漏洞-DIR-815 栈溢出</strong><br> <code>漏洞本身不难。用sprintf函数把string往一个1024长度的变量里放内容，然而这一步没有判断长度，导致溢出。所以核心就是调试看变量从哪儿进，中途遇到了什么判断需要满足。</code></p>
+<li><p><strong>漏洞-DIR-815 栈溢出</strong><br> 漏洞本身不难。用sprintf函数把string往一个1024长度的变量里放内容，然而这一步没有判断长度，导致溢出。所以核心就是调试看变量从哪儿进，中途遇到了什么判断需要满足。</p>
 </li>
-<li><p><strong>环境配置+调试</strong><br> <code>MIPS架构漏洞的第一大难点就是qemu去模拟环境，这个过程要去装东西，设置网卡和网桥之类的让程序能够跑起来。其次是debug调试的时候不像x86_64这么方便，要设置架构，设置target，调试的时候一些功能不太好用，比如vmmap不一定可以直接拿到libc_base，还得自己去通过一些方法找到libc base。</code></p>
+<li><p><strong>环境配置+调试</strong><br> MIPS架构漏洞的第一大难点就是qemu去模拟环境，这个过程要去装东西，设置网卡和网桥之类的让程序能够跑起来。其次是debug调试的时候不像x86_64这么方便，要设置架构，设置target，调试的时候一些功能不太好用，比如vmmap不一定可以直接拿到libc_base，还得自己去通过一些方法找到libc base。</p>
 </li>
 <li><p><strong>MIPS的一些特性</strong></p>
-<p> <code>(1) 叶子函数：函数没有调用任何子函数的时候，$ra寄存器就存了这个函数执行完后需要跳转的地址。我们一般遇到的都是非叶子函数，比如main里面你多少会再调个printf之类的。</code></p>
-<p> <code>(2) 非叶子函数：函数里面调用了子函数，去调用子函数的时候$ra的值会被放到栈中，然后去调用自函数的时候，一般会有如下类似操作：</code></p>
+<p> (1) 叶子函数：函数没有调用任何子函数的时候，$ra寄存器就存了这个函数执行完后需要跳转的地址。我们一般遇到的都是非叶子函数，比如main里面你多少会再调个printf之类的。</p>
+<p> (2) 非叶子函数：函数里面调用了子函数，去调用子函数的时候$ra的值会被放到栈中，然后去调用自函数的时候，一般会有如下类似操作：</p>
 </li>
 </ol>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 子函数内部会有类似的修改sp和ra的行为</span><br><span class="line">addi $sp, <span class="number">-0x40</span>           # 开辟栈帧空间</span><br><span class="line">sw $ra, <span class="number">0x38</span>+var_01($sp) # 把ra值放到$sp+<span class="number">0x38</span>+var_01的栈空间去</span><br></pre></td></tr></table></figure>
 
-<pre><code>`那基于此，如果有栈溢出之类的漏洞，自然$ra的值我们可以很轻易控制。`
-`(1)和(2)都很无聊。- . -`
+<pre><code>那基于此，如果有栈溢出之类的漏洞，自然$ra的值我们可以很轻易控制。`
+(1)和(2)都很无聊。- . -
 
 (3)流水线指令集：意思就是MIPS架构下指令可能存在并行问题，即顺序执行的指令同时执行了。比如当我们要jalr到某个函数的时候，还没跳转的时候，此时就已经开始执行到jalr指令往后的那条指令去了。所有有的时候看到jalr 指令后面会跟个nop，我觉得就是为了做缓冲用的。
 
@@ -221,7 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2026-03-22 23:26:16
+              2026-03-22 23:28:56
             </span>
             
                   <span class="post-tags">
