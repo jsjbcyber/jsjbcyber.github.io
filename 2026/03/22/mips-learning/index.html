@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2026-03-22 23:28:56
+          2026-03-23 19:32:24
         </span>
         
               <span class="post-tags">
@@ -199,7 +199,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ol>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 子函数内部会有类似的修改sp和ra的行为</span><br><span class="line">addi $sp, <span class="number">-0x40</span>           # 开辟栈帧空间</span><br><span class="line">sw $ra, <span class="number">0x38</span>+var_01($sp) # 把ra值放到$sp+<span class="number">0x38</span>+var_01的栈空间去</span><br></pre></td></tr></table></figure>
 
-<pre><code>那基于此，如果有栈溢出之类的漏洞，自然$ra的值我们可以很轻易控制。`
+<pre><code>那基于此，如果有栈溢出之类的漏洞，自然$ra的值我们可以很轻易控制。
 (1)和(2)都很无聊。- . -
 
 (3)流水线指令集：意思就是MIPS架构下指令可能存在并行问题，即顺序执行的指令同时执行了。比如当我们要jalr到某个函数的时候，还没跳转的时候，此时就已经开始执行到jalr指令往后的那条指令去了。所有有的时候看到jalr 指令后面会跟个nop，我觉得就是为了做缓冲用的。
@@ -221,7 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2026-03-22 23:28:56
+              2026-03-23 19:32:24
             </span>
             
                   <span class="post-tags">
