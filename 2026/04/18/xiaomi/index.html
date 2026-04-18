@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2026-04-18 22:42:02
+          2026-04-18 22:43:09
         </span>
         
               <span class="post-tags">
@@ -192,51 +192,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>路由器型号：Xiaomi路由器BE10000 Pro 稳定版<br>固件版本号：BE10000 Pro 1.0.89（2026年2月11日更新）<br>下载地址：<a target="_blank" rel="noopener" href="https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin">https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin</a></p>
 </blockquote>
 <hr>
-<p>下载好固件之后，我们先分别file和binwalk看一下：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;1.png]]</p>
-<p>发现这是一个压缩后的UBI image镜像文件，没有加密。可以直接binwalk分离看看：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;2.png]]</p>
-<p>虽然有报错，但是我们仍然可以拿到kernel和rootfs：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;3.png]]</p>
-<p>依旧binwalk看看rootfs：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;4.png]]</p>
-<p>看到是一个SquashFS 的文件系统，那我们可以通过命令: <code>unsquashfs xxx.ubifs</code> 分离得到文件系统：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;5.png]]</p>
-<h1 id="2-查看架构及模拟环境配置"><a href="#2-查看架构及模拟环境配置" class="headerlink" title="2. 查看架构及模拟环境配置"></a>2. 查看架构及模拟环境配置</h1><p>一般路由器都是通过uhttpd、httpd之类的来实现后端整个逻辑，所以我们就去找目录下有没有这些东西。<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;6.png]]</p>
-<p>发现.&#x2F;usr&#x2F;sbin&#x2F;uhttpd，file分析一下，看到架构是aarch64<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;7.png]]</p>
+<p>下载好固件之后，我们先分别file和binwalk看一下：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/1.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/1.png]]</a></p>
+<p>发现这是一个压缩后的UBI image镜像文件，没有加密。可以直接binwalk分离看看：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/2.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/2.png]]</a></p>
+<p>虽然有报错，但是我们仍然可以拿到kernel和rootfs：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]]</a></p>
+<p>依旧binwalk看看rootfs：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]]</a></p>
+<p>看到是一个SquashFS 的文件系统，那我们可以通过命令: <code>unsquashfs xxx.ubifs</code> 分离得到文件系统：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]]</a></p>
+<h1 id="2-查看架构及模拟环境配置"><a href="#2-查看架构及模拟环境配置" class="headerlink" title="2. 查看架构及模拟环境配置"></a>2. 查看架构及模拟环境配置</h1><p>一般路由器都是通过uhttpd、httpd之类的来实现后端整个逻辑，所以我们就去找目录下有没有这些东西。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]]</a></p>
+<p>发现.&#x2F;usr&#x2F;sbin&#x2F;uhttpd，file分析一下，看到架构是aarch64<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]]</a></p>
 <p>aarch64架构的内核与文件系统现在有ZIKH26师傅文章提供，可以直接下载使用。</p>
 <blockquote>
 <p>博客链接：<a target="_blank" rel="noopener" href="https://zikh26.github.io/posts/3d9490d.html">QEMU搭建ARM64环境 | ZIKH26’s Blog</a><br>下载链接：<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FcbCkfGuHlvohGlzA-HRRyM8izqhHALE/view">arm64.tar.gz - Google 云端硬盘</a></p>
 </blockquote>
-<p>下载并解压后的文件内容如下：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;8.png]]</p>
+<p>下载并解压后的文件内容如下：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]]</a></p>
 <hr>
 <h2 id="2-1-aarch64系统模拟"><a href="#2-1-aarch64系统模拟" class="headerlink" title="2.1 aarch64系统模拟"></a>2.1 aarch64系统模拟</h2><p>运行之前按照文章中的方法直接net.sh我会出错，即使是已经搭建好网桥和接口后也会。所以我选择的是不运行net.sh，自行搭建网桥与接口：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> brctl addbr virbr0</span><br><span class="line"><span class="built_in">sudo</span> ifconfig virbr0 172.22.9.1/24 up <span class="comment"># 这里的172...是我的WSL机器eth0网卡的IP段，具体各位师傅可以根据自己的情况来设置</span></span><br><span class="line"><span class="built_in">sudo</span> tunctl -t tap0</span><br><span class="line"><span class="built_in">sudo</span> ifconfig tap0 172.22.9.130/24 up</span><br><span class="line"><span class="built_in">sudo</span> brctl addif virbr0 tap0</span><br></pre></td></tr></table></figure>
 
-<p>网桥搭建前：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;9.png]]</p>
-<p>网桥搭建后：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;10.png]]</p>
-<p>通过上面命令搭建好，我们就可以直接运行.&#x2F;start.sh就可以模拟启动aarch64架构的系统，直到让我们login的时候就可以了。<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;11.png]]</p>
+<p>网桥搭建前：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]]</a></p>
+<p>网桥搭建后：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/10.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/10.png]]</a></p>
+<p>通过上面命令搭建好，我们就可以直接运行.&#x2F;start.sh就可以模拟启动aarch64架构的系统，直到让我们login的时候就可以了。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/11.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/11.png]]</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">有两个账户：zikh和root</span><br><span class="line">密码都是：root</span><br></pre></td></tr></table></figure>
 
-<p>然后这个时候我们的系统还没有分配IP，和WSL无法互通访问<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;12.png]]</p>
+<p>然后这个时候我们的系统还没有分配IP，和WSL无法互通访问<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/12.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/12.png]]</a></p>
 <p>我们通过以下命令为其分配IP地址，这一步需要root权限，我们用su命令切换用户到root再运行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip add add 172.22.9.129/24 dev enp0s1</span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> enp0s1 up</span><br></pre></td></tr></table></figure>
 
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;13.png]]</p>
-<p>我们还可以ping通wsl宿主机：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;14.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/13.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/13.png]]</a></p>
+<p>我们还可以ping通wsl宿主机：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/14.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/14.png]]</a></p>
 <h2 id="2-2-复制文件系统，进行配置"><a href="#2-2-复制文件系统，进行配置" class="headerlink" title="2.2 复制文件系统，进行配置"></a>2.2 复制文件系统，进行配置</h2><p>设置完IP后，我们就可以把之前固件提取出来的文件系统传递过来进行模拟了。这里我用的是scp来传递文件系统，将我们提取的文件系统发送到aarch64模拟的系统中去。用scp传递的时候注意不要直接传给root@，ssh那边没配置还不允许这么传递。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法：scp -r 你宿主机上的文件系统路径 zikh@172.22.9.129:模拟机器复制到的目录</span></span><br><span class="line">我的是：scp -r ~/xiaomi/squashfs-root zikh@172.22.9.129:/home/zikh/</span><br><span class="line">输入密码之后，就开始了传递，这个过程比较慢，等一会儿就好。</span><br></pre></td></tr></table></figure>
 
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;15.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/15.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/15.png]]</a></p>
 <h2 id="2-3-模拟环境"><a href="#2-3-模拟环境" class="headerlink" title="2.3 模拟环境"></a>2.3 模拟环境</h2><p>文件到位之后，我们把dev和proc挂载好（这两个是模拟系统的时候必要的），再通过chroot，把当前目录（squashfs-root目录）作为根目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount --<span class="built_in">bind</span> /proc proc</span><br><span class="line">mount --<span class="built_in">bind</span> /dev dev</span><br><span class="line"><span class="built_in">chroot</span> . /bin/sh</span><br></pre></td></tr></table></figure>
 
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;16.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/16.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/16.png]]</a></p>
 <p>到这一步有个坑就是如果像我这样提示chroot找不到的，是因为chroot在&#x2F;usr&#x2F;sbin&#x2F;chroot这里，需要我们配置一下系统PATH才能运行：</p>
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;17.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/17.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/17.png]]</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/sbin:/usr/local/bin</span><br></pre></td></tr></table></figure>
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;18.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/18.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/18.png]]</a></p>
 <h2 id="2-4-模拟启动"><a href="#2-4-模拟启动" class="headerlink" title="2.4 模拟启动"></a>2.4 模拟启动</h2><blockquote>
 <p>路由器模拟我一般都会看&#x2F;etc&#x2F;init.d&#x2F;目录下的boot或者rcS之类的脚本，因为这里面会写它启动的时候需要的内容，把要用的目录，要挂载的东西都实现后，用qemu-arm-static之类的进行仿真启动。为什么不直接启动，是因为这些脚本都是基于当前在文件系统的根目录来创建的，如果直接启动会报错</p>
 </blockquote>
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;19.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/19.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/19.png]]</a></p>
 <p>这里我们因为已经在busybox里面了，根目录就是这个文件系统，所以我们可以通过命令<code>/etc/init.d/boot boot</code>来启动。</p>
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;20.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/20.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/20.png]]</a></p>
 <p>第一个挂载我们不用管，第二个Failed to connect to ubus是因为这里启用了ubus总线通信，所以我们还得启动ubus。</p>
 <blockquote>
 <p>[!NOTE] ubus笔记<br><strong>ubus 是 OpenWrt 系统中内置的轻量级进程间通信（IPC）框架</strong>，核心作用是让 OpenWrt 里的不同程序（进程）快速、安全地交换数据、调用功能，相当于系统内部的 “通信总线”。</p>
@@ -244,19 +244,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubusd &amp;</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line">procd &amp;</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line">/etc/init.d/uhttpd enabled</span><br><span class="line">/etc/init.d/uhttpd start</span><br></pre></td></tr></table></figure>
 
-<p>然后在enabled这里，我们发现报错了：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;21.png]]<br>定位到错误点，发现是调用了flock，但是flock命令没找到的原因。<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;22.png]]</p>
+<p>然后在enabled这里，我们发现报错了：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/21.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/21.png]]</a><br>定位到错误点，发现是调用了flock，但是flock命令没找到的原因。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/22.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/22.png]]</a></p>
 <p>busybox就有，我们软连接过去修复缺失的flock:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修复 flock 缺失（busybox 自带，只是没链接）</span></span><br><span class="line"><span class="built_in">ln</span> -s /bin/busybox /bin/flock</span><br><span class="line"><span class="built_in">ln</span> -s /bin/busybox /usr/bin/flock</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者用这个，我们让其永远返回成功就可以了</span></span><br><span class="line"><span class="built_in">ln</span> -s /bin/true /bin/flock</span><br></pre></td></tr></table></figure>
 
-<p>然后再次启动就没问了：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;23.png]]</p>
+<p>然后再次启动就没问了：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/23.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/23.png]]</a></p>
 <p>ps命令就可以看到启动成功</p>
-<p>![[&#x2F;images&#x2F;xiaomi_1&#x2F;24.png]]<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;25.png]]</p>
-<p>这是uhttpd的用法<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;26.png]]</p>
+<p>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/24.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/24.png]]</a><br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/25.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/25.png]]</a></p>
+<p>这是uhttpd的用法<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/26.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/26.png]]</a></p>
 <p>到这一步，我们的固件就正式模拟器动起来了。但如果我们通过物理机，即最外部我们这个win11系统浏览器去访问是无法访问的，因为模拟的aarch64系统只和wsl宿主机互通，与物理机无法通信，但是物理机可以和wsl宿主机互通，因此我们可以把模拟的系统80端口内容转发至宿主机wsl的8787端口，然后物理机去访问wsl的8081端口(端口可以自己设置，不限制)就能访问啦。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat TCP-LISTEN:8787,fork,<span class="built_in">bind</span>=0.0.0.0 TCP:172.22.9.128:80</span><br></pre></td></tr></table></figure>
 
-<p>这样就挂起转发我们流量了。然后访问宿主机wsl的IP即172.22.9.77:8787就可以访问到小米路由器的页面了。<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;27.png]]</p>
-<p>如果不想模拟了，切换到root用户输入poweroff就可以了：<br>![[&#x2F;images&#x2F;xiaomi_1&#x2F;28.png]]</p>
+<p>这样就挂起转发我们流量了。然后访问宿主机wsl的IP即172.22.9.77:8787就可以访问到小米路由器的页面了。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/27.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/27.png]]</a></p>
+<p>如果不想模拟了，切换到root用户输入poweroff就可以了：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/28.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/28.png]]</a></p>
 <blockquote>
 <p>这里还有一点坑就是，如果一次弄没弄好或者第二次启动存在问题不好排查的情况时。我建议直接删掉aarch64的文件系统和内核，然后解压重新来一次。其他方法待研究ing</p>
 </blockquote>
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2026-04-18 22:42:02
+              2026-04-18 22:43:09
             </span>
             
                   <span class="post-tags">
