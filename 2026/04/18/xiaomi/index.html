@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2026-04-18 22:47:16
+          2026-04-18 22:48:21
         </span>
         
               <span class="post-tags">
@@ -192,23 +192,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>路由器型号：Xiaomi路由器BE10000 Pro 稳定版<br>固件版本号：BE10000 Pro 1.0.89（2026年2月11日更新）<br>下载地址：<a target="_blank" rel="noopener" href="https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin">https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin</a></p>
 </blockquote>
 <hr>
-<p>下载好固件之后，我们先分别file和binwalk看一下：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/1.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/1.png]</a></p>
-<p>发现这是一个压缩后的UBI image镜像文件，没有加密。可以直接binwalk分离看看：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/2.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/2.png]]</a></p>
-<p>虽然有报错，但是我们仍然可以拿到kernel和rootfs：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]]</a></p>
-<p>依旧binwalk看看rootfs：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]]</a></p>
-<p>看到是一个SquashFS 的文件系统，那我们可以通过命令: <code>unsquashfs xxx.ubifs</code> 分离得到文件系统：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]]</a></p>
-<h1 id="2-查看架构及模拟环境配置"><a href="#2-查看架构及模拟环境配置" class="headerlink" title="2. 查看架构及模拟环境配置"></a>2. 查看架构及模拟环境配置</h1><p>一般路由器都是通过uhttpd、httpd之类的来实现后端整个逻辑，所以我们就去找目录下有没有这些东西。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]]</a></p>
-<p>发现.&#x2F;usr&#x2F;sbin&#x2F;uhttpd，file分析一下，看到架构是aarch64<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]]</a></p>
+<p>下载好固件之后，我们先分别file和binwalk看一下：<br><img src="/" alt="https:&#x2F;&#x2F;github.com&#x2F;jsjbcyber&#x2F;jsjbcyber.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;xiaomi_1&#x2F;1.png"></p>
+<p>发现这是一个压缩后的UBI image镜像文件，没有加密。可以直接binwalk分离看看：<br><img src="/" alt="https:&#x2F;&#x2F;github.com&#x2F;jsjbcyber&#x2F;jsjbcyber.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;xiaomi_1&#x2F;2.png"></p>
+<p>虽然有报错，但是我们仍然可以拿到kernel和rootfs：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/3.png]</a></p>
+<p>依旧binwalk看看rootfs：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/4.png]</a></p>
+<p>看到是一个SquashFS 的文件系统，那我们可以通过命令: <code>unsquashfs xxx.ubifs</code> 分离得到文件系统：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/5.png]</a></p>
+<h1 id="2-查看架构及模拟环境配置"><a href="#2-查看架构及模拟环境配置" class="headerlink" title="2. 查看架构及模拟环境配置"></a>2. 查看架构及模拟环境配置</h1><p>一般路由器都是通过uhttpd、httpd之类的来实现后端整个逻辑，所以我们就去找目录下有没有这些东西。<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/6.png]</a></p>
+<p>发现.&#x2F;usr&#x2F;sbin&#x2F;uhttpd，file分析一下，看到架构是aarch64<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/7.png]</a></p>
 <p>aarch64架构的内核与文件系统现在有ZIKH26师傅文章提供，可以直接下载使用。</p>
 <blockquote>
 <p>博客链接：<a target="_blank" rel="noopener" href="https://zikh26.github.io/posts/3d9490d.html">QEMU搭建ARM64环境 | ZIKH26’s Blog</a><br>下载链接：<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FcbCkfGuHlvohGlzA-HRRyM8izqhHALE/view">arm64.tar.gz - Google 云端硬盘</a></p>
 </blockquote>
-<p>下载并解压后的文件内容如下：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]]</a></p>
+<p>下载并解压后的文件内容如下：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/8.png]</a></p>
 <hr>
 <h2 id="2-1-aarch64系统模拟"><a href="#2-1-aarch64系统模拟" class="headerlink" title="2.1 aarch64系统模拟"></a>2.1 aarch64系统模拟</h2><p>运行之前按照文章中的方法直接net.sh我会出错，即使是已经搭建好网桥和接口后也会。所以我选择的是不运行net.sh，自行搭建网桥与接口：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> brctl addbr virbr0</span><br><span class="line"><span class="built_in">sudo</span> ifconfig virbr0 172.22.9.1/24 up <span class="comment"># 这里的172...是我的WSL机器eth0网卡的IP段，具体各位师傅可以根据自己的情况来设置</span></span><br><span class="line"><span class="built_in">sudo</span> tunctl -t tap0</span><br><span class="line"><span class="built_in">sudo</span> ifconfig tap0 172.22.9.130/24 up</span><br><span class="line"><span class="built_in">sudo</span> brctl addif virbr0 tap0</span><br></pre></td></tr></table></figure>
 
-<p>网桥搭建前：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]]</a></p>
+<p>网桥搭建前：<br>!()[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/9.png]</a></p>
 <p>网桥搭建后：<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/10.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/10.png]]</a></p>
 <p>通过上面命令搭建好，我们就可以直接运行.&#x2F;start.sh就可以模拟启动aarch64架构的系统，直到让我们login的时候就可以了。<br>![[<a target="_blank" rel="noopener" href="https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/11.png]]">https://github.com/jsjbcyber/jsjbcyber.github.io/blob/master/images/xiaomi_1/11.png]]</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">有两个账户：zikh和root</span><br><span class="line">密码都是：root</span><br></pre></td></tr></table></figure>
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2026-04-18 22:47:16
+              2026-04-18 22:48:21
             </span>
             
                   <span class="post-tags">
