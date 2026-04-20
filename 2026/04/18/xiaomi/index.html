@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2026-04-20 20:08:48
+          2026-04-20 20:13:11
         </span>
         
               <span class="post-tags">
@@ -192,7 +192,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>路由器型号：Xiaomi路由器BE10000 Pro 稳定版<br>固件版本号：BE10000 Pro 1.0.89（2026年2月11日更新）<br>下载地址：<a target="_blank" rel="noopener" href="https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin">https://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rp04/miwifi_rp04_firmware_76b5c_1.0.89.bin</a></p>
 </blockquote>
 <hr>
-<p>下载好固件之后，我们先分别file和binwalk看一下：<br><img src="https://raw.githubusercontent.com/jsjbcyber/jsjbcyber.github.io/master/images/xiaomi_1/1.png" alt="1"></p>
+<p>下载好固件之后，我们先分别file和binwalk看一下：<br><img src="https://raw.githubusercontent.com/jsjbcyber/jsjbcyber.github.io/master/images/xiaomi_1/1.png" width="80%" alt="xiaomi_3"><br><img src="https://raw.githubusercontent.com/jsjbcyber/jsjbcyber.github.io/master/images/xiaomi_1/1.png" alt="1"></p>
 <p>发现这是一个压缩后的UBI image镜像文件，没有加密。可以直接binwalk分离看看：<br><img src="https://raw.githubusercontent.com/jsjbcyber/jsjbcyber.github.io/master/images/xiaomi_1/2.png" alt="2"></p>
 <p>虽然有报错，但是我们仍然可以拿到kernel和rootfs：<br><img src="/" alt="https:&#x2F;&#x2F;github.com&#x2F;jsjbcyber&#x2F;jsjbcyber.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;xiaomi_1&#x2F;3.png"></p>
 <p>依旧binwalk看看rootfs：<br><img src="/" alt="https:&#x2F;&#x2F;github.com&#x2F;jsjbcyber&#x2F;jsjbcyber.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;xiaomi_1&#x2F;4.png"></p>
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2026-04-20 20:08:48
+              2026-04-20 20:13:11
             </span>
             
                   <span class="post-tags">
